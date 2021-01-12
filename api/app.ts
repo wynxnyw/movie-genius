@@ -2,10 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import {Movie} from './src/models/movie'
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv'
+import movieRoutes from './src/routes/movies'
 
-require('dotenv').config()
+dotenv.config()
 
 const app = express();
 const PORT = process.env.API_PORT;
@@ -20,18 +21,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 
-app.post('/movies/create', (req, res) => {
-    const movie = new Movie(req.body);
-    movie.save()
-        .then(result => res.send(result))
-        .catch(err => console.log(err))
-});
-
-app.get('/movies', (req, res) => {
-    Movie.find()
-        .then(result => res.send(result))
-        .catch(err => console.log(err))
-})
+app.use(movieRoutes);
 
 app.use((req, res) => {
    res.send('404 - Route Not Found');
