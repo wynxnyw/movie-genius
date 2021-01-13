@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Movie} from "../Movies";
-import {Button} from "@material-ui/core";
 import {createMovie} from "../api";
+import {Button} from "../../../components/Button";
 
 export function CreateMovie() {
     const [formData, setFormData] = useState<Movie>({
