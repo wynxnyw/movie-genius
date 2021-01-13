@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Movie} from "./Movies";
 import {fetch} from "../../app/axios";
-import { Button, Modal } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import {CreateMovie} from "./create";
 
 export function Movies() {
@@ -17,12 +17,16 @@ export function Movies() {
         setMovies(movies)
     }
 
+    async function handleClickMovie(id?: string) {
+        const movie = await fetch(`movies/${id}`)
+    }
+
     if(showForm) {
         return (
             <div>
                 <Button color='primary' onClick={() => setShowForm(false)}>New Entry</Button>
                 <ul>
-                    {movies?.map(x => <li>{x.title}</li>)}
+                    {movies?.map((x, i) => <li key={i} onClick={() => handleClickMovie(x._id)}>{x.title}</li>)}
                 </ul>
             </div>
         )

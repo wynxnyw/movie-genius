@@ -1,12 +1,10 @@
 import React from 'react';
-import {Movies} from './pages';
-
-
 import './App.css';
+import {Router} from "./app/router";
 
 function App() {
   return (
-    <Movies />
+    <Router />
   );
 }
 
