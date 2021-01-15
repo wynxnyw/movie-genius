@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Movie} from "../Movies";
+import {Movie} from "../Movie";
 import {createMovie} from "../api";
-import {Button} from "../../../components/Button";
+import {useHistory} from 'react-router-dom';
 
 export function CreateMovie() {
     const [formData, setFormData] = useState<Movie>({
@@ -12,8 +12,11 @@ export function CreateMovie() {
         }
     });
 
+    const history = useHistory();
+
     async function submitMovie() {
         const response = await createMovie(formData)
+        history.push('/movies')
     }
 
     function changeTitle(title: string) {
@@ -36,11 +39,11 @@ export function CreateMovie() {
             <input value={formData.title} onChange={e => changeTitle(e.target.value)} />
             <br />
             Brief Summary:
-            <input value={formData.plot?.summary} onChange={e => changePlot('summary', e.target.value)} />
+            <textarea value={formData.plot?.summary} onChange={e => changePlot('summary', e.target.value)} />
             <br />
             Detailed Plot:
-            <input value={formData.plot?.description} onChange={e => changePlot('description', e.target.value)} />
-            <Button onClick={() => submitMovie()}>Submit</Button>
+            <textarea value={formData.plot?.description} onChange={e => changePlot('description', e.target.value)} />
+            <button onClick={() => submitMovie()}>Submit</button>
         </div>
     )
 }
