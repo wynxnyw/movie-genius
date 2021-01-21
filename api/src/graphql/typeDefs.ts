@@ -7,15 +7,31 @@ export const typeDefs = gql`
         plotSummary: String
         plotDescription: String
     }
-    type Query {
-        getMovies: [Movie]
+    type User {
+        id: ID!
+        email: String!
+        username: String!
+        token: String!
     }
+
     input MovieInput {
         title: String!
         plotSummary: String
-        plotDescription: String
+        plotDescription: String!
     }
+    input RegisterInput {
+        username: String!
+        password: String!
+        email: String!
+    }
+    
     type Mutation {
         enterMovie(movieInput: MovieInput): [Movie]
+        registerUser(registerInput: RegisterInput): User!
     }
+    type Query {
+        getMovies: [Movie]
+        getUsers: [User]
+    }
+    
 `
