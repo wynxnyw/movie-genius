@@ -1,29 +1,17 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv'
-import movieRoutes from './src/routes/movies'
+import { ApolloServer } from 'apollo-server';
+import { resolvers} from "./src/graphql/resolvers/index";
+import { typeDefs } from "./src/graphql/typeDefs";
 
 dotenv.config()
+const uri = process.env.MONGO_DB_URI || '';
+const port = process.env.PORT
 
-const app = express();
-const PORT = process.env.API_PORT;
-const dbUri = process.env.DB_URI;
+const server = new ApolloServer({
+   typeDefs,
+   resolvers
+})
 
-mongoose.connect(dbUri || '', {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(res => app.listen(PORT, () => console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`)))
-    .catch(err => console.log(err));
-
-app.use(cors());
-app.use(morgan('dev'))
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
-
-app.use(movieRoutes);
-
-app.use((req, res) => {
-   res.send('404 - Route Not Found');
-});
-
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => server.listen(port, () => console.log(`⚡️[server]: Server is running at https://localhost:${port}`)))
