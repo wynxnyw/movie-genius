@@ -18,10 +18,4 @@ export const typeDefs = gql`
     type Mutation {
         enterMovie(movieInput: MovieInput): [Movie]
     }
-#    type User {
-#        id: ID!
-#        email: String!
-#        token: String!
-#        email: String!
-#    }
 `

@@ -2,8 +2,8 @@ import {Schema, model} from 'mongoose';
 
 const movieSchema = new Schema({
     title: String,
-    summary: String,
-    description: String
+    plotSummary: String,
+    plotDescription: String
 
 }, { timestamps: true } );
 
