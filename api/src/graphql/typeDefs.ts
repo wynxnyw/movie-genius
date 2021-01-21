@@ -4,13 +4,24 @@ export const typeDefs = gql`
     type Movie {
         id: ID!
         title: String!
-        plotSummary: String!
-        plotDescription: String!
+        plotSummary: String
+        plotDescription: String
     }
     type Query {
         getMovies: [Movie]
     }
-    type Mutation {
-        enterMovie: [Movie]
+    input MovieInput {
+        title: String!
+        plotSummary: String
+        plotDescription: String
     }
+    type Mutation {
+        enterMovie(movieInput: MovieInput): [Movie]
+    }
+#    type User {
+#        id: ID!
+#        email: String!
+#        token: String!
+#        email: String!
+#    }
 `
