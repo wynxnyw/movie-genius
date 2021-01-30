@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import './Navbar.css';
+import {routes} from "../app/router/routes";
 
 function Navbar() {
   const [click, setClick]  = useState(false)
@@ -28,16 +29,18 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <Link to='/page-one' className='nav-links' onClick={closeMobileMenu}>
-                Page 1
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link to='/page-two' className='nav-links' onClick={closeMobileMenu}>
-               Page 2
-              </Link>
-            </li>
+            {routes.map(route => {
+              if (route.path === '/') {
+                return null
+              }
+              return (
+                <li className='nav-item'>
+                  <Link to={route.path} className='nav-links' onClick={closeMobileMenu}>
+                    {route.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </nav>
