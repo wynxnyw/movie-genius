@@ -8,13 +8,15 @@ export async function registerUser(_: any, {registerInput: { username, email, pa
 
     // validate data
 
-    const match = !!await User.findOne({username}) || !!await User.findOne({email})
+    const emailMatch = !!await User.findOne({email});
+    const usernameMatch = !!await User.findOne({username});
 
-    if(match) {
-        throw new UserInputError('Username or email is taken', {
-
-        })
-    } else {
+    if(emailMatch) {
+        throw new UserInputError('Email is taken', {})
+    } if(usernameMatch) {
+        throw new UserInputError('Username is taken', {})
+    }
+    else {
         password = await bcrypt.hash(password, 12)
 
         const user = new User({
